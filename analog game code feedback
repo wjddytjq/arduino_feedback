@@ -1,0 +1,86 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+void setup() {
+  // put your setup code here, to run once:
+  lcd.begin();
+  lcd.backlight();
+  Serial.begin(9600);
+}
+int A[5]={15,18,21,24,27};
+int c=0;
+void loop() {
+  // put your main code here, to run repeatedly:  
+  lcd.clear();
+  
+  lcd.setCursor(0,c);
+  lcd.print("0");
+    for(int a=0; a<5; a++){
+      if(a==0 || a==3){
+        lcd.setCursor(A[a],0);
+        lcd.print("<");
+        }
+        else{
+          lcd.setCursor(A[a],1);
+          lcd.print("<");
+          }
+    }
+ 
+
+  delay(300);
+for(int a=0; a<5;a++){
+  if(A[a]>0){
+    A[a]--;
+    }
+    else{
+      A[a]=15;
+      }
+  }
+ 
+  if(analogRead(A0)>700){
+   c=1;
+  }
+  else if(analogRead(A0)<300){
+   c=0;
+   }
+
+for(int a=0; a<5;a++){
+  if(a>2){
+  switch (c){
+     case 0:
+      switch (A[a]){
+        case 0:
+        Serial.print("game-over");
+        lcd.begin();
+        lcd.setCursor(0,0);
+        lcd.print("game-over");
+        delay(100);
+        exit(0);
+        break;
+     }
+     break;
+   }
+   }
+   else {
+      switch (c){
+     case 1:
+      switch (A[a]){
+        case 1:
+        Serial.print("game-over");
+        lcd.begin();
+        lcd.setCursor(0,0);
+        lcd.print("game-over");
+        delay(100);
+        exit(0);
+        break;
+     }
+     break;
+   }
+   }
+    
+
+   
+}
+}
